@@ -1,4 +1,3 @@
-
 name: Laravel CI/CD
 
 on:
@@ -32,7 +31,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: mbstring, bcmath, mysql
+          extensions: mbstring, bcmath, pdo_mysql
           coverage: none
 
       - name: Install dependencies
@@ -61,3 +60,21 @@ jobs:
       - name: Run tests
         working-directory: ./src
         run: php artisan test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: laravel-tests
+
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          script: |
+            cd /home/youruser/yourprojectdir  # Ganti ini dengan path folder Laravel di VPS
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
