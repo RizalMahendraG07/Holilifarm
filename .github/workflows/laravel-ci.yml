@@ -74,7 +74,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: 22
           script: |
-            cd /home/youruser/yourprojectdir  # Ganti ini dengan path folder Laravel di VPS
+            cd /Holilifarm  # Ganti ini dengan path folder Laravel di VPS
             git pull origin main
             docker-compose down
             docker-compose up -d --build

@@ -37,7 +37,7 @@
   <script>
     Swal.fire({
       icon: 'success',
-      title: 'Berhasil!',
+      title: 'Berhasill!',
       text: "{{ session('success') }}",
       confirmButtonColor: '#28a745'
     });
