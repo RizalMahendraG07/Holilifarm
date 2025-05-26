@@ -24,7 +24,7 @@
       <img src="{{ asset('storage/' . $informasi->foto) }}" alt="Foto Informasi" width="150">
     @endif
 
-    <label for="foto">Ganti Foto (Opsional)</label>
+    <label for="foto">Ganti Foto (OPSIONAL)</label>
     <input type="file" name="foto" id="foto" accept="image/*">
 
     <label for="link">Link Artikel</label>
