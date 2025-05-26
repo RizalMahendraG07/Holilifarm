@@ -14,7 +14,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'price' => $this->faker->numberBetween(1000, 100000),
-            'stok' => $this->faker->numberBetween(1, 100),
+            'stok' => 100,
             'deskripsi' => $this->faker->sentence(),
             'image' => 'storage/fotoproduk/1o8GwvzJsoVCGKx3e9ZAg0tvIYnjV18SkKzuGz1V.jpg', // atau sesuaikan default image
         ];
