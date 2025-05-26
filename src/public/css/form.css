@@ -1,0 +1,71 @@
+/* Form Styling */
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #009933;
+    margin-bottom: 24px;
+  }
+  
+  label {
+    display: block;
+    font-weight: 500;
+    color: #009933;
+    margin-bottom: 8px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn-red, .btn-green {
+    padding: 12px 28px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .btn-red {
+    background-color: #f00;
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .btn-red:hover {
+    background-color: #d40000;
+  }
+  
+  .btn-green {
+    background-color: #00b33c;
+    color: #fff;
+  }
+  
+  .btn-green:hover {
+    background-color: #009933;
+  }
+  
