@@ -73,7 +73,7 @@
                 <div>
                     <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di Holili Farm</h1>
                     <p class="text-xl text-black"> 
-                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung-Jember.
+                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung - Jember.
                     </p>
                 </div>
                 <img src="/images/foto_model_petani.png" class="max-w-sm rounded-lg" />
