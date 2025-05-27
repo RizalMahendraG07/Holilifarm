@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: rizalmahendra/holilifarm-deploy:latest
+    image: yourdockerhubusername/holilifarm-deploy:latest
     container_name: laravel_app
     working_dir: /var/www/html
     volumes:
