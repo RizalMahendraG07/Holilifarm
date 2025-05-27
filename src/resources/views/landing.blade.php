@@ -71,7 +71,7 @@
         <div class="row_home flex items-start justify-center">
             <div class="hero-content max-w-screen-xl w-full mx-auto px-20 flex flex-col items-center text-center lg:flex-row lg:text-left lg:gap-10">
                 <div>
-                    <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di Holili Farm</h1>
+                    <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di Holyly Farm</h1>
                     <p class="text-xl text-black"> 
                         Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung - Jember.
                     </p>
