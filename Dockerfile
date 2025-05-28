@@ -25,4 +25,4 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 # Set working directory (wajib cocok dengan docker-compose volume mount)
 WORKDIR /var/www
-COPY src/ /var/www/
+COPY src/ /var/www/html/
