@@ -24,5 +24,5 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 # Set working directory (wajib cocok dengan docker-compose volume mount)
-WORKDIR /var/www
+WORKDIR /var/www/html
 COPY src/ /var/www/html/

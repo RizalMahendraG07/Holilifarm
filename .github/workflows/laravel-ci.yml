@@ -103,8 +103,8 @@ jobs:
           script: |
             export IMAGE_TAG=${{ github.sha }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
-            sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
             cd /home/deployer/Holilifarm
+            sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
             docker compose down
             docker compose up -d
             echo "Waiting for MySQL to be ready..."
