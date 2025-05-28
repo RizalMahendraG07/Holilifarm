@@ -103,6 +103,8 @@ jobs:
           port: 22
           source: "./docker-compose.yml,./nginx,./src"
           target: "/home/deployer/Holilifarm"
+          rm: true
+          strip_components: 0
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v0.1.10
