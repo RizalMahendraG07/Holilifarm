@@ -119,7 +119,7 @@ jobs:
             docker compose down
             docker compose up -d
             echo "Waiting for MySQL to be ready..."
-            sleep 30
+            sleep 15
             docker compose exec app php artisan migrate --force
             docker compose exec app php artisan db:seed --class=UserSeeder --force
             docker compose exec app php artisan config:cache
