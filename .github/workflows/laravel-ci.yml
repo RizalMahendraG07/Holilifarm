@@ -80,51 +80,50 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
         with:
-           context: .
-           file: ./Dockerfile
-           push: true
-           tags: |
-              ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
-              ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
+            ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
 
   deploy:
-  runs-on: ubuntu-latest
-  needs: build-and-push-image
+    runs-on: ubuntu-latest
+    needs: build-and-push-image
 
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Sync project files to VPS
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        password: ${{ secrets.SSH_PASS }}
-        port: 22
-        source: "."
-        target: "/home/deployer/Holilifarm"
-        rm: false
-        strip_components: 0
-        overwrite: true
+      - name: Sync project files to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          source: "."
+          target: "/home/deployer/Holilifarm"
+          rm: false
+          strip_components: 0
+          overwrite: true
 
-    - name: Deploy to VPS via SSH
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        password: ${{ secrets.SSH_PASS }}
-        port: 22
-        script: |
-          export IMAGE_TAG=${{ github.sha }}
-          cd /home/deployer/Holilifarm
-          docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
-          sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
-          docker compose down
-          docker compose up -d
-          echo "Waiting for MySQL to be ready..."
-          sleep 15
-          docker compose exec app php artisan migrate --force
-          docker compose exec app php artisan db:seed --class=UserSeeder --force
-          docker compose exec app php artisan config:cache
-          docker compose exec app php artisan view:clear
-
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          script: |
+            export IMAGE_TAG=${{ github.sha }}
+            cd /home/deployer/Holilifarm
+            docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
+            sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
+            docker compose down
+            docker compose up -d
+            echo "Waiting for MySQL to be ready..."
+            sleep 15
+            docker compose exec app php artisan migrate --force
+            docker compose exec app php artisan db:seed --class=UserSeeder --force
+            docker compose exec app php artisan config:cache
+            docker compose exec app php artisan view:clear
