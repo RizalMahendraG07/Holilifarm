@@ -87,12 +87,23 @@ jobs:
               ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
               ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push-image
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync project files to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          source: "./docker-compose.yml,./nginx,./src"
+          target: "/home/deployer/Holilifarm"
+
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -102,8 +113,8 @@ jobs:
           port: 22
           script: |
             export IMAGE_TAG=${{ github.sha }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
             cd /home/deployer/Holilifarm
+            docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
             sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
             docker compose down
             docker compose up -d
@@ -113,4 +124,3 @@ jobs:
             docker compose exec app php artisan db:seed --class=UserSeeder --force
             docker compose exec app php artisan config:cache
             docker compose exec app php artisan view:clear
-
