@@ -94,11 +94,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Upload tar to VPS (exclude storage/bootstrap/cache)
+      - name: Create tar excluding storage/bootstrap/cache
         run: |
-          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src
+          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src docker-compose.yml
 
-      - name: Copy tar to VPS
+      - name: Upload tar to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -106,9 +106,9 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: 22
           source: "holilifarm.tar.gz"
-          target: "/home/deployer/Holilifarm"
+          target: "/home/${{ secrets.SSH_USER }}/Holilifarm"
 
-      - name: SSH deploy and extract
+      - name: SSH deploy and run Docker Compose
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -117,15 +117,22 @@ jobs:
           port: 22
           script: |
             export IMAGE_TAG=${{ github.sha }}
-            cd /home/deployer/Holilifarm
+            cd /home/${{ secrets.SSH_USER }}/Holilifarm
             tar -xzf holilifarm.tar.gz
             rm holilifarm.tar.gz
+
             docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
             sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
+
             docker compose down
             docker compose up -d
+
             echo "Waiting for MySQL to be ready..."
             sleep 15
+
+            docker compose exec app mkdir -p storage/framework/{views,sessions,cache} bootstrap/cache
+            docker compose exec app chmod -R 775 storage bootstrap/cache
+
             docker compose exec app php artisan migrate --force
             docker compose exec app php artisan db:seed --class=UserSeeder --force
             docker compose exec app php artisan config:cache
