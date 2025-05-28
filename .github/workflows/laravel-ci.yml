@@ -80,10 +80,13 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
+           context: .
+           file: ./Dockerfile
+           push: true
+           tags: |
+              ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
+              ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -98,9 +101,12 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: 22
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
+            export IMAGE_TAG=${{ github.sha }}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
+            sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
             cd /home/deployer/Holilifarm
             docker compose down
             docker compose up -d
             docker compose exec app php artisan migrate --force
+            docker compose exec app php artisan db:seed --class=UserSeeder --force
             docker compose exec app php artisan config:cache
