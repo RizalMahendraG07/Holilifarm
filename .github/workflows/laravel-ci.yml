@@ -101,10 +101,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
-          source: |
-            ./docker-compose.yml
-            ./nginx
-            ./src
+          source: "."
           target: "/home/deployer/Holilifarm"
           rm: false
           strip_components: 0
