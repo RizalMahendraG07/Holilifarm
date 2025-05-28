@@ -94,20 +94,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sync project files to VPS
+      - name: Upload tar to VPS (exclude storage/bootstrap/cache)
+        run: |
+          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src
+
+      - name: Copy tar to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
-          source: "."
+          source: "holilifarm.tar.gz"
           target: "/home/deployer/Holilifarm"
-          rm: false
-          strip_components: 0
-          overwrite: true
 
-      - name: Deploy to VPS via SSH
+      - name: SSH deploy and extract
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -117,6 +118,8 @@ jobs:
           script: |
             export IMAGE_TAG=${{ github.sha }}
             cd /home/deployer/Holilifarm
+            tar -xzf holilifarm.tar.gz
+            rm holilifarm.tar.gz
             docker pull ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
             sed -i "s|image: .*$|image: ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG|" docker-compose.yml
             docker compose down
