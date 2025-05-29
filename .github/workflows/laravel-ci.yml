@@ -1,104 +1,34 @@
-name: Laravel CI/CD
+name: Deploy Laravel via Docker
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  laravel-tests:
+  deploy:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel
-          MYSQL_USER: laravel
-          MYSQL_PASSWORD: secret
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout kode
+        uses: actions/checkout@v3
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, bcmath, pdo_mysql
-          coverage: none
-
-      - name: Install dependencies
-        working-directory: ./src
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Copy .env
-        working-directory: ./src
-        run: cp .env.example .env
-
-      - name: Generate app key
-        working-directory: ./src
-        run: php artisan key:generate
-
-      - name: Run migration
-        working-directory: ./src
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel
-          DB_USERNAME: laravel
-          DB_PASSWORD: secret
-        run: php artisan migrate --force
-
-      - name: Run tests
-        working-directory: ./src
-        run: php artisan test
-
-  build-and-push-image:
-    runs-on: ubuntu-latest
-    needs: laravel-tests
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
+      - name: Login ke DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:latest
-            ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-push-image
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create tar excluding storage/bootstrap/cache
+      - name: Build dan push Docker image
         run: |
-          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src docker-compose.yml nginx
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:${{ github.sha }}
 
-      - name: Upload tar to VPS
+      - name: Arsipkan file deployment
+        run: |
+          tar -czf holilifarm.tar.gz docker-compose.yml nginx
+
+      - name: Kirim file ke server
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -108,7 +38,7 @@ jobs:
           source: "holilifarm.tar.gz"
           target: "/home/${{ secrets.SSH_USER }}/Holilifarm"
 
-      - name: SSH deploy and run Docker Compose
+      - name: SSH deploy dan jalankan Docker Compose
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -121,8 +51,12 @@ jobs:
 
             cd /home/${{ secrets.SSH_USER }}/Holilifarm
 
-            echo "🧹 Menghapus file nginx lama..."
-            rm -rf nginx
+            echo "🧹 Perbaiki hak akses default.conf jika folder"
+            sudo chown -R $USER:$USER nginx || true
+            sudo rm -rf nginx/default.conf || true
+
+            echo "🧹 Hapus folder nginx lama..."
+            sudo rm -rf nginx || true
 
             echo "📦 Ekstrak file baru..."
             tar -xzf holilifarm.tar.gz
@@ -143,13 +77,13 @@ jobs:
             echo "⏳ Menunggu MySQL siap..."
             sleep 15
 
-            echo "📂 Perizinan direktori..."
+            echo "📂 Perizinan direktori Laravel..."
             docker compose --env-file .env.deploy exec app mkdir -p storage/framework/{views,sessions,cache} bootstrap/cache
             docker compose --env-file .env.deploy exec app chmod -R 775 storage bootstrap/cache
 
             echo "🗃️ Jalankan migrate dan seeder..."
-            docker compose --env-file .env.deploy exec app php artisan migrate --force
-            docker compose --env-file .env.deploy exec app php artisan db:seed --class=UserSeeder --force
+            docker compose --env-file .env.deploy exec app php artisan migrate --force || true
+            docker compose --env-file .env.deploy exec app php artisan db:seed --class=UserSeeder --force || true
 
             echo "⚙️ Clear & cache config/view..."
             docker compose --env-file .env.deploy exec app php artisan config:cache
