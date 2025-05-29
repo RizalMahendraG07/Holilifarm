@@ -120,23 +120,37 @@ jobs:
             export APP_IMAGE=${{ secrets.DOCKER_USERNAME }}/holilifarm-deploy:$IMAGE_TAG
 
             cd /home/${{ secrets.SSH_USER }}/Holilifarm
+
+            echo "🧹 Menghapus file nginx lama..."
+            rm -rf nginx
+
+            echo "📦 Ekstrak file baru..."
             tar -xzf holilifarm.tar.gz
             rm holilifarm.tar.gz
 
+            echo "🐳 Pull image terbaru..."
             docker pull $APP_IMAGE
 
+            echo "🔧 Generate .env.deploy..."
             echo "APP_IMAGE=$APP_IMAGE" > .env.deploy
 
+            echo "🧯 Stop & remove container lama..."
             docker compose --env-file .env.deploy down
+
+            echo "🚀 Jalankan container baru..."
             docker compose --env-file .env.deploy up -d
 
-            echo "Waiting for MySQL to be ready..."
+            echo "⏳ Menunggu MySQL siap..."
             sleep 15
 
+            echo "📂 Perizinan direktori..."
             docker compose --env-file .env.deploy exec app mkdir -p storage/framework/{views,sessions,cache} bootstrap/cache
             docker compose --env-file .env.deploy exec app chmod -R 775 storage bootstrap/cache
 
+            echo "🗃️ Jalankan migrate dan seeder..."
             docker compose --env-file .env.deploy exec app php artisan migrate --force
             docker compose --env-file .env.deploy exec app php artisan db:seed --class=UserSeeder --force
+
+            echo "⚙️ Clear & cache config/view..."
             docker compose --env-file .env.deploy exec app php artisan config:cache
             docker compose --env-file .env.deploy exec app php artisan view:clear
