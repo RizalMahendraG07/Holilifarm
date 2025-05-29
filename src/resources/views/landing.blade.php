@@ -91,7 +91,7 @@
             @foreach($products as $product)
             <div class="card bg-base-100 w-80 shadow-lg" data-produk-id="{{ $product->id }}" data-harga="{{ $product->price }}">
                 <figure class="h-60 w-full overflow-hidden">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="h-full w-full object-cover" />
+                    <img src="{{ asset('storage/' .$product->image) }}" alt="{{ $product->name }}" class="h-full w-full object-cover" />
                 </figure>
                 <div class="card-body bg-white shadow-xl">
                     <div class="flex items-center">
