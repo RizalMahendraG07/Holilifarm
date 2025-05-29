@@ -96,7 +96,7 @@ jobs:
 
       - name: Create tar excluding storage/bootstrap/cache
         run: |
-          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src docker-compose.yml
+          tar --exclude='src/storage' --exclude='src/bootstrap/cache' -czf holilifarm.tar.gz src docker-compose.yml nginx
 
       - name: Upload tar to VPS
         uses: appleboy/scp-action@v0.1.4
