@@ -80,6 +80,7 @@ jobs:
             echo "📂 Perizinan direktori Laravel..."
             docker compose --env-file .env.deploy exec app mkdir -p storage/framework/{views,sessions,cache} bootstrap/cache
             docker compose --env-file .env.deploy exec app chmod -R 775 storage bootstrap/cache
+            docker compose --env-file .env.deploy exec app chown -R www-data:www-data storage bootstrap/cache
 
             echo "🗃️ Jalankan migrate dan seeder..."
             docker compose --env-file .env.deploy exec app php artisan migrate --force || true
