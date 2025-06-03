@@ -76,8 +76,7 @@
                 <div>
                     <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di Holili Farm</h1>
                     <p class="text-xl text-black">
-                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung-Jember. Kami menyediakan berbagai produk pertanian berkualitas tinggi dengan teknologi modern untuk mendukung pertanian berkelanjutan.
-                    </p>
+                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung-Jember. Kami menyediakan berbagai produk pertanian berkualitas tinggi dengan teknologi modern untuk mendukung pertanian berkelanjutan.                    </p>
                 </div>
                 <img src="/images/foto_model_petani.png" class="max-w-sm rounded-lg" />
             </div>
@@ -316,7 +315,7 @@ function closePopup() {
 
 <section id="informasi" class="p-6 bg-white text-black">
   <div class="text-center mb-12">
-    <h2 class="text-4xl font-bold mb-2">Informasi</h2>
+    <h2 class="text-4xl font-bold mb-2">Artikel Informasi</h2>
     <p class="text-lg text-gray-600 max-w-2xl mx-auto">
       Artikel seputar budidaya anggur dan kisah inspiratif petani
     </p>
