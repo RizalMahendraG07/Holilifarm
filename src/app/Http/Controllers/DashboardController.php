@@ -111,34 +111,38 @@ public function destroy($id)
     }   
 
         public function grafik() {
-            $productCount = Product::count();
+    $productCount = Product::count();
+    $riwayatCount = Riwayat::count();
+    $informasiCount = Informasi::count();
 
-        // Mengambil data jumlah riwayat transaksi
-        $riwayatCount = Riwayat::count();
-        $informasiCount= Informasi::count();
+    // Filter status 'selesai' untuk semua query income
+    $dailyIncome = Riwayat::where('status', 'selesai')
+        ->whereDate('created_at', Carbon::today())
+        ->sum('harga_total');
 
-        // Mengambil total penghasilan perhari, perminggu, perbulan, dan pertahun
-        $dailyIncome = Riwayat::whereDate('created_at', Carbon::today())
-            ->sum('harga_total');
+    $weeklyIncome = Riwayat::where('status', 'selesai')
+        ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        ->sum('harga_total');
 
-        $weeklyIncome = Riwayat::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->sum('harga_total');
+    $monthlyIncome = Riwayat::where('status', 'selesai')
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->whereYear('created_at', Carbon::now()->year)
+        ->sum('harga_total');
 
-        $monthlyIncome = Riwayat::whereMonth('created_at', Carbon::now()->month)
-            ->sum('harga_total');
+    $yearlyIncome = Riwayat::where('status', 'selesai')
+        ->whereYear('created_at', Carbon::now()->year)
+        ->sum('harga_total');
 
-        $yearlyIncome = Riwayat::whereYear('created_at', Carbon::now()->year)
-            ->sum('harga_total');
+    return view('admin.grafik', compact(
+        'productCount', 
+        'informasiCount',
+        'riwayatCount', 
+        'dailyIncome', 
+        'weeklyIncome', 
+        'monthlyIncome', 
+        'yearlyIncome'
+    ));
+}
 
-        return view('admin.grafik', compact(
-            'productCount', 
-            'informasiCount',
-            'riwayatCount', 
-            'dailyIncome', 
-            'weeklyIncome', 
-            'monthlyIncome', 
-            'yearlyIncome'
-        ));
-        }
 
 }

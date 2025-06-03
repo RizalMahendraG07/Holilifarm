@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Holili Farm</title>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />        
 
     <!-- Bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+  
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,49 +32,51 @@
     </style>
 </head>
 <body class="bg-white min-h-screen">
-    <header>
-        <div class="navbar bg-white">
-            <div class="navbar-start">
-                <div class="dropdown">
-                    <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
-                        </svg>
-                    </div>
-                    <ul class="menu menu-sm dropdown-content bg-white text-black rounded-box z-10 mt-3 w-52 p-2 shadow">
-                        <li><a href="#home">Beranda</a></li>
-                        <li><a href="#produk">Produk</a></li>
-                        <li><a href="#maps">Lokasi</a></li>
-                        <li><a href="#informasi">Informasi</a></li>
-                        <li><a href="#tentangkami">Tentang Kami</a></li>
-                    </ul>
-                </div>
-                <a class="btn btn-ghost text-xl" href="#">
-                    <img src="/images/holili-farm-logo.png" alt="Logo" class="h-10" />
-                </a>
-            </div>
-            <div class="navbar-center hidden lg:flex">
-                <ul class="menu menu-horizontal text-black px-1">
-                    <li><a href="#home" class="hover:text-green-500">Beranda</a></li>
-                    <li><a href="#produk" class="hover:text-green-500">Produk</a></li>
-                    <li><a href="#maps" class="hover:text-green-500">Lokasi</a></li>
-                    <li><a href="#informasi" class="hover:text-green-500">Informasi</a></li>
-                    <li><a href="#tentangkami" class="hover:text-green-500">Tentang Kami</a></li>
-                </ul>
-            </div>
-            <div class="navbar-end">
-                <a href="/grafik" class="btn text-white bg-green-500 hover:bg-green-700">Log In</a>
-            </div>
-        </div>
-    </header>
+    <header  data-aos="fade-down">
+  <div class="navbar bg-white relative">
+    <div class="navbar-start">
+      <a class="btn btn-ghost text-xl" href="#">
+        <img src="/images/holili-farm-logo.png" alt="Logo" class="h-10" />
+      </a>
+    </div>
 
-    <section id="home" class="p-6">
+    <div class="navbar-center absolute left-1/2 transform -translate-x-1/2 hidden lg:flex">
+      <ul class="menu menu-horizontal text-black px-1">
+        <li><a href="#home" class="hover:text-green-500">Beranda</a></li>
+        <li><a href="#produk" class="hover:text-green-500">Produk</a></li>
+        <li><a href="#maps" class="hover:text-green-500">Lokasi</a></li>
+        <li><a href="#informasi" class="hover:text-green-500">Informasi</a></li>
+        <li><a href="#tentangkami" class="hover:text-green-500">Tentang Kami</a></li>
+      </ul>
+    </div>
+
+    <div class="navbar-end lg:hidden">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul class="menu menu-sm dropdown-content bg-white text-black rounded-box z-10 mt-3 w-52 p-2 shadow">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#produk">Produk</a></li>
+          <li><a href="#maps">Lokasi</a></li>
+          <li><a href="#informasi">Informasi</a></li>
+          <li><a href="#tentangkami">Tentang Kami</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+    <section id="home" class="p-6" data-aos="fade-up">
         <div class="row_home flex items-start justify-center">
             <div class="hero-content max-w-screen-xl w-full mx-auto px-20 flex flex-col items-center text-center lg:flex-row lg:text-left lg:gap-10">
                 <div>
-                    <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di HOLILI Farm</h1>
-                    <p class="text-xl text-black"> 
-                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung - Jember.
+                    <h1 class="text-6xl text-green-500 font-bold mb-4">Selamat Datang Di Holili Farm</h1>
+                    <p class="text-xl text-black">
+                        Merupakan Sistem Informasi Perkebunan Greenhouse yang berada di Desa Ajung-Jember.
                     </p>
                 </div>
                 <img src="/images/foto_model_petani.png" class="max-w-sm rounded-lg" />
@@ -82,127 +85,156 @@
     </section>
 
     <!-- Produk Section -->
-    <section id="produk" class="p-6 bg-gray-100 min-h-screen shadow-lg flex flex-col items-center">
-        <div class="max-w-xl pl-10 mb-6 text-center">
-            <h2 class="text-4xl font-bold text-black">Produk Kami</h2>
-        </div>
+    <!-- Produk Section -->
+<section id="produk" class="p-6 bg-gray-100 min-h-screen shadow-lg flex flex-col items-center" data-aos="fade-up" data-aos-duration="700">
+    <div class="max-w-xl pl-10 mb-6 text-center">
+        <h2 class="text-4xl font-bold text-black">Produk Kami</h2>
+    </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-            @foreach($products as $product)
-            <div class="card bg-base-100 w-80 shadow-lg" data-produk-id="{{ $product->id }}" data-harga="{{ $product->price }}">
-                <figure class="h-60 w-full overflow-hidden">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="h-full w-full object-cover" />
-                </figure>
-                <div class="card-body bg-white shadow-xl">
-                    <div class="flex items-center">
-                        <h2 class="card-title font-bold text-black">{{ $product->name }}</h2>
-                        <span class="ml-4 text-red-500">Rp {{ number_format($product->price, 0, ',', '.') }}/Kg</span>
-                    </div>
-                    <p class="text-justify line-clamp-3">{{ $product->deskripsi }}</p>
-                    <span class="text-gray-500">Stok: {{ $product->stok }} Kg</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+        @foreach($products as $product)
+        <div class="card bg-base-100 w-80 shadow-lg" data-produk-id="{{ $product->id }}" data-harga="{{ $product->price }}" data-stok="{{ $product->stok }}">
+            <figure class="h-60 w-full overflow-hidden">
+                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="h-full w-full object-cover" />
+            </figure>
+            <div class="card-body bg-white shadow-xl">
+                <div class="flex items-center">
+                    <h2 class="card-title font-bold text-black">{{ $product->name }}</h2>
+                    <span class="ml-4 text-red-500">Rp {{ number_format($product->price, 0, ',', '.') }}/Kg</span>
+                </div>
+                <p class="text-justify line-clamp-3">{{ $product->deskripsi }}</p>
+                <span class="text-gray-500">Stok: {{ $product->stok }} Kg</span>
 
-                    <div class="card-actions justify-end">
-                        <!-- Tambahkan class btn-beli dan data produk -->
-                        <button type="button" class="btn btn-primary bg-green-500 btn-beli">Beli</button>
-                    </div>
+                <div class="card-actions justify-end">
+                    <button type="button" class="btn btn-primary bg-green-500 btn-beli">Beli</button>
                 </div>
             </div>
-            @endforeach
         </div>
-        <div class="mt-6 pagination">{{ $products->links()}}</div>
-    </section>
+        @endforeach
+    </div>
+    <div class="mt-6 pagination">{{ $products->links()}}</div>
+</section>
 
     <!-- MODAL -->
-    <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-[90%] max-w-md rounded-xl shadow-2xl p-6 relative">
-            <figure class="h-48 w-full overflow-hidden rounded-lg mb-4">
-                <img id="modalImage" src="" alt="Produk" class="h-full w-full object-cover" />
-            </figure>
-            <h3 class="text-xl font-semibold mb-4 text-center" id="modalTitle">Pemesanan Produk</h3>
+    <!-- MODAL -->
+<div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black
 
-            <form method="POST" action="{{ route('pesan.store') }}" class="space-y-4" id="orderForm" onsubmit="return handlePesan(event)">
-                @csrf
+ bg-opacity-50 backdrop-blur-sm">
+    <div class="bg-white w-[90%] max-w-md rounded-xl shadow-2xl p-6 relative">
+        <figure class="h-48 w-full overflow-hidden rounded-lg mb-4">
+            <img id="modalImage" src="" alt="Produk" class="h-full w-full object-cover" />
+        </figure>
+        <h3 class="text-xl font-semibold mb-4 text-center" id="modalTitle">Pemesanan Produk</h3>
 
-                <!-- Nama Pembeli -->
-                <div class="form-control w-full">
-                    <label class="label">
-                        <span class="label-text">Nama Pembeli</span>
-                    </label>
-                    <input type="text" name="nama_pembeli" placeholder="Nama" class="input input-bordered w-full bg-white" required />
-                </div>
+        <form method="POST" action="{{ route('pesan.store') }}" class="space-y-4" id="orderForm" onsubmit="return handlePesan(event)">
+            @csrf
 
-                <!-- Alamat -->
-                <div class="form-control w-full">
-                    <label class="label">
-                        <span class="label-text">Alamat</span>
-                    </label>
-                    <input type="text" name="alamat" placeholder="Alamat lengkap" class="input input-bordered w-full bg-white" required />
-                </div>
+            <!-- Nama Pembeli -->
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Nama Pembeli</span>
+                </label>
+                <input type="text" name="nama_pembeli" placeholder="Nama" class="input input-bordered w-full bg-white" required />
+            </div>
 
-                <!-- Nomor WhatsApp -->
-                <div class="form-control w-full">
-                    <label class="label">
-                        <span class="label-text">Nomor WhatsApp</span>
-                    </label>
-                    <input type="tel" name="nomor_wa" placeholder="08xxxxxxxxxx" class="input input-bordered w-full bg-white" required />
-                </div>
+            <!-- Alamat -->
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Alamat</span>
+                </label>
+                <input type="text" name="alamat" placeholder="Alamat lengkap" class="input input-bordered w-full bg-white" required />
+            </div>
 
-                <!-- Jumlah Produk -->
-                <div class="form-control w-full">
-                    <label class="label">
-                        <span class="label-text">Jumlah Produk</span>
-                    </label>
-                    <label class="input-group">
-                        <input type="number" name="jumlah_produk" id="jumlah_produk" placeholder="Jumlah" class="input input-bordered w-full bg-white" required min="1" />
-                        <span>Kg</span>
-                    </label>
-                </div>
+            <!-- Nomor WhatsApp -->
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Nomor WhatsApp</span>
+                </label>
+                <input type="tel" pattern="08[0-9]{8,12}" name="nomor_wa" placeholder="08xxxxxxxxxx" class="input input-bordered w-full bg-white" title="Masukkan nomor WA yang valid" required />
+            </div>
 
-                <!-- Hidden Inputs -->
-                <input type="hidden" name="produk_id" id="modalProdukId" />
-                <input type="hidden" name="harga_total" id="modalHargaTotal" />
-                <input type="hidden" name="status" value="pending" />
+            <!-- Jumlah Produk -->
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Jumlah Produk</span>
+                </label>
+                <label class="input-group">
+                    <input type="number" name="jumlah_produk" id="jumlah_produk" placeholder="Jumlah" class="input input-bordered w-full bg-white" required min="1" />
+                    <span>Kg</span>
+                </label>
+                <div id="jumlahError" class="text-red-500 text-sm mt-2 hidden" data-aos="fade-up"></div>
+            </div>
 
-                <!-- Tombol -->
-                <div class="flex justify-between pt-4">
-                    <button type="button" class="btn btn-outline text-white bg-red-500" onclick="closeModal()">Kembali</button>
-                    <button type="submit" class="btn btn-primary bg-green-600">Pesan</button>
-                </div>
-            </form>
-        </div>
+            <!-- Hidden Inputs -->
+            <input type="hidden" name="produk_id" id="modalProdukId" />
+            <input type="hidden" name="harga_total" id="modalHargaTotal" />
+            <input type="hidden" name="status" value="pending" />
+
+            <!-- Tombol -->
+            <div class="flex justify-between pt-4">
+                <button type="button" class="btn btn-outline text-white bg-red-500" onclick="closeModal()">Kembali</button>
+                <button type="submit" class="btn btn-primary bg-green-600">Pesan</button>
+            </div>
+        </form>
     </div>
+</div>
 
 <script>
     // Buka modal dan isi data produk
-    function openModal(imageSrc, title, produkId, harga) {
-        document.getElementById('productModal').classList.remove('hidden');
-        document.getElementById('modalImage').src = imageSrc;
-        document.getElementById('modalTitle').innerText = `Pemesanan Produk: ${title}`;
-        document.getElementById('modalProdukId').value = produkId;
-        document.getElementById('modalHargaTotal').value = harga;
-    }
+   // Buka modal dan isi data produk
+function openModal(imageSrc, title, produkId, harga, stok) {
+    document.getElementById('productModal').classList.remove('hidden');
+    document.getElementById('modalImage').src = imageSrc;
+    document.getElementById('modalTitle').innerText = `Pemesanan Produk: ${title}`;
+    document.getElementById('modalProdukId').value = produkId;
+    document.getElementById('modalHargaTotal').dataset.hargaPerKg = harga;
+    document.getElementById('jumlah_produk').dataset.stok = stok; // Simpan stok di input jumlah_produk
+}
 
-    // Tutup modal
-    function closeModal() {
-        document.getElementById('productModal').classList.add('hidden');
-        document.getElementById('orderForm').reset();
-    }
+// Tutup modal
+function closeModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.getElementById('orderForm').reset();
+}
 
-    // Pasang event click di tombol beli
-    document.querySelectorAll('.btn-beli').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            const card = e.target.closest('.card');
-            const imgSrc = card.querySelector('img').src;
-            const title = card.querySelector('h2').innerText;
-            const produkId = card.getAttribute('data-produk-id');
-            const harga = card.getAttribute('data-harga');
+// Pasang event click di tombol beli
+document.querySelectorAll('.btn-beli').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        const imgSrc = card.querySelector('img').src;
+        const title = card.querySelector('h2').innerText;
+        const produkId = card.getAttribute('data-produk-id');
+        const harga = card.getAttribute('data-harga');
+        const stok = card.getAttribute('data-stok'); // Ambil stok
 
-            openModal(imgSrc, title, produkId, harga);
-        });
+        openModal(imgSrc, title, produkId, harga, stok);
     });
+});
 
-    // Handle form submit (AJAX + redirect ke WhatsApp)
-   async function handlePesan(event) {
+// Validasi jumlah produk saat input berubah
+document.getElementById('jumlah_produk').addEventListener('input', function () {
+    const jumlah = Number(this.value);
+    const stok = Number(this.dataset.stok);
+    const errorMessage = document.getElementById('jumlahError');
+    
+    if (!errorMessage) {
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'jumlahError';
+        errorDiv.className = 'text-red-500 text-sm mt-1';
+        this.parentElement.appendChild(errorDiv);
+    }
+    
+    if (jumlah > stok) {
+        document.getElementById('jumlahError').innerText = 'Stok tidak mencukupi!';
+        this.setCustomValidity('Stok tidak mencukupi!');
+    } else {
+        document.getElementById('jumlahError').innerText = '';
+        this.setCustomValidity('');
+    }
+});
+
+// Handle form submit (AJAX + redirect ke WhatsApp)
+async function handlePesan(event) {
     event.preventDefault();
 
     const form = document.getElementById('orderForm');
@@ -211,9 +243,21 @@
     const nama = formData.get('nama_pembeli');
     const alamat = formData.get('alamat');
     const nomor = formData.get('nomor_wa');
-    const jumlah = formData.get('jumlah_produk');
+    const jumlah = Number(formData.get('jumlah_produk'));
     const produk = document.getElementById('modalTitle').innerText.replace('Pemesanan Produk: ', '');
+    const hargaPerKg = Number(document.getElementById('modalHargaTotal').dataset.hargaPerKg);
+    const stok = Number(document.getElementById('jumlah_produk').dataset.stok);
+    const hargaTotal = jumlah * hargaPerKg; // Hitung total harga
     const adminWA = '6285737134160';
+
+    // Validasi stok di frontend
+    if (jumlah > stok) {
+        alert('Stok tidak mencukupi!');
+        return false;
+    }
+
+    // Update harga_total di form sebelum kirim
+    document.getElementById('modalHargaTotal').value = hargaTotal;
 
     try {
         const response = await fetch(form.action, {
@@ -225,24 +269,27 @@
             body: formData,
         });
 
+        const result = await response.json();
+
         if (!response.ok) {
-            alert('Gagal menyimpan data!');
+            alert(result.message || 'Gagal menyimpan data!');
             return false;
         }
 
-        const message = `Halo Holili Farm , saya ingin memesan produk: ${produk}\n` +
+        const message = `Halo, saya ingin memesan produk: ${produk}\n` +
             `Nama: ${nama}\n` +
             `Alamat: ${alamat}\n` +
             `Jumlah: ${jumlah} Kg\n` +
+            `Total Harga: Rp ${Number(hargaTotal).toLocaleString('id-ID')}\n` +
             `No WA: ${nomor}`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${adminWA}?text=${encodedMessage}`;
 
-     showPopup(); // tampilkan popup
-setTimeout(() => {
-    window.open(`https://wa.me/${adminWA}?text=${encodedMessage}`, '_blank');
-    window.location.href = '/'; // redirect setelah 3 detik
-}, 3000);
+        showPopup(); // Tampilkan popup
+        setTimeout(() => {
+            window.open(whatsappUrl, '_blank');
+            window.location.href = '/'; // Redirect setelah 3 detik
+        }, 3000);
     } catch (error) {
         console.error(error);
         alert('Terjadi kesalahan saat mengirim pesanan.');
@@ -250,6 +297,7 @@ setTimeout(() => {
 
     return false;
 }
+
 // Tampilkan popup
 function showPopup() {
     document.getElementById('popupBerhasil').classList.remove('hidden');
@@ -360,6 +408,13 @@ function closePopup() {
         <button onclick="closePopup()" class="btn bg-green-500 text-white hover:bg-green-700">Oke</button>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800, // durasi animasi
+    once: true,    // animasi cuma sekali
+  });
+</script>
 
 </body>
 </html>
